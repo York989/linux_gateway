@@ -1,0 +1,147 @@
+BasedOnStyle: Microsoft       
+ColumnLimit: 0
+IndentWidth: 4
+BinPackArguments: true
+
+
+
+# void f(int a, int b, int c);
+
+# void f(int a,
+#        int b,
+#        int ccccccccccccccccccccccccccccccccccccc);
+BinPackParameters: OnePerLine
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterEnum: false
+  AfterStruct: false
+  AfterUnion: false
+  SplitEmptyFunction: false
+  AfterFunction: true
+  AfterControlStatement: Always
+  BeforeElse: true
+  AfterCaseLabel: true
+
+AlignAfterOpenBracket : true      # 函数参数对齐
+# BracedInitializerIndentWidth: 0
+# AlignAfterOpenBracket: AlwaysBreak
+# BracedInitializerIndentWidth: 2
+AlignArrayOfStructures : Right   # 结构体数组对齐
+
+# int a            = 1;
+# int somelongname = 2;
+# double c         = 3;
+AlignConsecutiveAssignments: #赋值对齐
+  Enabled: true
+  PadOperators: false      # 是否将短赋值运算符
+  AcrossEmptyLines: false # 是否跨越空行对齐
+  AcrossComments: false   # 跨越注释对齐
+  AlignCompound: true     # 是否将复合赋值（如 +=）与 = 一起对齐
+
+# # int aaaa : 1;
+# # int b    : 12;
+# # int ccc  : 8;
+# AlignConsecutiveBitFields: #位对齐
+#   Enabled: true
+#   AcrossEmptyLines: false
+#   AcrossComments: false
+#   BitFieldColonSpacing: None
+
+# # int         aaaa = 12;
+# # float       b = 23;
+# # std::string ccc;
+# AlignConsecutiveDeclarations:  #声明对齐
+#   Enabled: false
+#   AcrossEmptyLines: false
+#   AcrossComments: false
+
+
+#define SHORT_NAME       42
+#define LONGER_NAME      0x007f
+#define EVEN_LONGER_NAME (2)
+#define foo(x)           (x * x)
+#define bar(y, z)        (y + z)
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+
+# # switch (level) {
+# # case log::info:    return "info:";
+# # case log::warning: return "warning:";
+# # default:           return "";
+# # }
+# AlignConsecutiveShortCaseStatements:
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: true
+#   AlignCaseColons: true
+
+# a  :$src1,
+# aa :$src2,
+# aaa:$src3
+AlignConsecutiveTableGenBreakingDAGArgColons:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+
+# # def Def       : Parent {}
+# # def DefDef    : Parent {}
+# # def DefDefDef : Parent {}
+# AlignConsecutiveTableGenDefinitionColons:
+#   Enabled: true
+#   AcrossEmptyLines: false
+#   AcrossComments: false
+
+# # #define A         \
+# #   int aaaa;       \
+# #   int b;          \
+# #   int dddddddddd;
+# AlignEscapedNewlines: LeftWithLastLine
+
+# int aaa = bbbbbbbbbbbbbbb +
+#           ccccccccccccccc;
+AlignOperands: Align
+KeepEmptyLinesAtEOF: true  # 行末空行
+# int a;     // My comment a
+# int b = 2; // comment  b
+AlignTrailingComments:
+  Kind: Always      #
+  OverEmptyLines: 2  # 空行超过3行不再对齐
+MaxEmptyLinesToKeep: 6
+
+
+
+# # while (true) {}
+# # while (true) { continue; }
+# AllowShortBlocksOnASingleLine: Always
+
+
+# # if (a) return;
+
+# # if (b)
+# #   return;
+# # else
+# #   return;
+
+# # if (c)
+# #   return;
+# # else {
+# #   return;
+# # }
+# AllowShortIfStatementsOnASingleLine: WithoutElse
+
+
+# # true:                   false:
+# # aaaa =          vs.     aaaa = "bbbb"
+# #     "bbbb"                     "cccc";
+# #     "cccc";
+# AlwaysBreakBeforeMultilineStrings: false
+
+
+
+# PackConstructorInitializers: Never
+
+
+
