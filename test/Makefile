@@ -50,3 +50,10 @@ mqtt_test: mqtt_test.c $(common) $(mqtt) $(log) $(cjson)
 	@$(cc) $^ -o $@ -I../3rdParty -I../app -I../common -lpaho-mqtt3c
 	@./$@
 	@rm -rf $@
+
+
+thread_test: thread_test.c $(common) $(log)
+	@$(cc) $^ -o $@ -I../3rdParty -I../common -lpthread
+	@./$@
+	@rm -rf $@
+

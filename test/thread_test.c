@@ -1,7 +1,9 @@
 #include "commo_config.h"
 #include "pthread.h"
 
-uint32_t THREAD_ID = 1;
+uint64_t THREAD_ID = 1;
+
+
 
 
 void *thread1(void *arg)
