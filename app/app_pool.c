@@ -13,15 +13,15 @@ void *thread_func(void *arg)
                                       sizeof(pool_task_t), NULL);
 
         // log_info("taskelen:%d", task_len);
-        if (task_len == -1)
-        {
-            perror("mq_receive failed");
-            printf("mqdes=%ld, expected_msgsize=%zu, recv_buf=%zu\n",
-                   (long)pool.mq, sizeof(pool_task_t), sizeof(pool_task_t));
-            sleep(1);
-            continue;
-        }
-        if (task_len > 0)
+        // if (task_len == -1)
+        // {
+        //     perror("mq_receive failed");
+        //     printf("mqdes=%ld, expected_msgsize=%zu, recv_buf=%zu\n",
+        //            (long)pool.mq, sizeof(pool_task_t), sizeof(pool_task_t));
+        //     sleep(1);
+        //     continue;
+        // }
+        if (task_len > 0 && pool_task_msg.pool_thread_func)
         {
             pool_task_msg.pool_thread_func(pool_task_msg.arg);
         }
@@ -37,20 +37,6 @@ com_status_e app_pool_init(uint32_t pool_size)
     }
     pool.pool_size = pool_size; // 记录创建的线程池大小
 
-    /* 消息队列初始化 */
-    struct mq_attr attr = {
-        .mq_flags   = 0,                   // 默认阻塞等待
-        .mq_maxmsg  = 10,                  // 最大消息数[和线程池中线程数相等]
-        .mq_msgsize = sizeof(pool_task_t), // 消息大小
-    };
-    pool.mq = mq_open(MQ_NAME, O_CREAT | O_RDWR, 0666, &attr);
-    if (pool.mq == -1)
-    {
-        log_error("消息队列初始化失败");
-        return COM_FAIL;
-    }
-    log_info("消息队列初始化成功");
-
 
     /* 创建线程 */
     pool.thread = malloc(pool_size * sizeof(pthread_t));
@@ -65,6 +51,20 @@ com_status_e app_pool_init(uint32_t pool_size)
     }
     log_info("线程池中线程初始化成功");
 
+
+    /* 消息队列初始化 */
+    struct mq_attr attr = {
+        .mq_flags   = 0,                   // 默认阻塞等待
+        .mq_maxmsg  = 10,                  // 最大消息数[和线程池中线程数相等]
+        .mq_msgsize = sizeof(pool_task_t), // 消息大小
+    };
+    pool.mq = mq_open(MQ_NAME, O_CREAT | O_RDWR, 0666, &attr);
+    if (pool.mq == -1)
+    {
+        log_error("消息队列初始化失败");
+        return COM_FAIL;
+    }
+    log_info("消息队列初始化成功");
 
     return COM_OK;
 }
