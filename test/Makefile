@@ -57,3 +57,8 @@ thread_test: thread_test.c $(common) $(log)
 	@./$@
 	@rm -rf $@
 
+thread_test_mutex: thread_test_mutex.c $(common) $(log)
+	@$(cc) $^ -o $@ -I../3rdParty -I../common -lpthread
+	@./$@
+	@rm -rf $@
+

@@ -4,8 +4,6 @@
 uint64_t THREAD_ID = 1;
 
 
-
-
 void *thread1(void *arg)
 {
     printf("thread1 start\n");
@@ -22,11 +20,9 @@ int main(int argc, char const *argv[])
     {
         printf("create thread1 failed\n");
     }
+
+
     while (1) {};
-
-
-
-
 
     return 0;
 }
