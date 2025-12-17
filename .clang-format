@@ -86,6 +86,8 @@ AlignConsecutiveTableGenBreakingDAGArgColons:
   AcrossEmptyLines: false
   AcrossComments: false
 
+
+
 # # def Def       : Parent {}
 # # def DefDef    : Parent {}
 # # def DefDefDef : Parent {}
@@ -115,8 +117,8 @@ MaxEmptyLinesToKeep: 6
 
 # # while (true) {}
 # # while (true) { continue; }
-# AllowShortBlocksOnASingleLine: Always
-
+AllowShortBlocksOnASingleLine: Always
+# AllowShortBlocksOnASingleLine: true
 
 # # if (a) return;
 
