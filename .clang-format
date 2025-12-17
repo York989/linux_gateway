@@ -110,7 +110,7 @@ KeepEmptyLinesAtEOF: true  # 行末空行
 # int b = 2; // comment  b
 AlignTrailingComments:
   Kind: Always      #
-  OverEmptyLines: 2  # 空行超过3行不再对齐
+  OverEmptyLines: 0  # 空行超过3行不再对齐
 MaxEmptyLinesToKeep: 6
 
 

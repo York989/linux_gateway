@@ -62,3 +62,7 @@ thread_test_mutex: thread_test_mutex.c $(common) $(log)
 	@./$@
 	@rm -rf $@
 
+thread_test_mqueue: thread_mqueue.c $(common) $(log)
+	@$(cc) $^ -o $@ -I../3rdParty -I../common
+	@./$@
+	@rm -rf $@
