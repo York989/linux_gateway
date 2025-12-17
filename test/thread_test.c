@@ -21,6 +21,11 @@ int main(int argc, char const *argv[])
         printf("create thread1 failed\n");
     }
     while (1) {};
+
+
+
+
+
     return 0;
 }
 
