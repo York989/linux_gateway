@@ -2,7 +2,7 @@
 
 void task(void *args)
 {
-    printf("任务%d", *(int *)args);
+    log_info("任务%d", *(int *)args);
 }
 
 
