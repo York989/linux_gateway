@@ -36,7 +36,5 @@ int main(int argc, char const *argv[])
 
 
     printf("num = %d\n", num);
-
-
     return 0;
 }
