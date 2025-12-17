@@ -35,6 +35,7 @@ log := ../3rdParty/log/log.c ../3rdParty/log/log.h
 cjson := ../3rdParty/cjson/cJSON.c ../3rdParty/cjson/cJSON.h
 mqtt := ../app/app_mqtt.c ../app/app_mqtt.h
 common := ../common/commo_config.h
+pool := ../app/app_pool.c ../app/app_pool.h
 
 log_test: log_test.c $(log)
 	@$(cc) $^ -o $@ -I ../3rdParty
@@ -64,5 +65,11 @@ thread_test_mutex: thread_test_mutex.c $(common) $(log)
 
 thread_test_mqueue: thread_mqueue.c $(common) $(log)
 	@$(cc) $^ -o $@ -I../3rdParty -I../common
+	@./$@
+	@rm -rf $@
+
+
+app_pool_test: app_pool_test.c $(common) $(log) $(pool)
+	@$(cc) $^ -o $@ -I../3rdParty -I../common -I../app
 	@./$@
 	@rm -rf $@
