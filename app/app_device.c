@@ -48,6 +48,19 @@ com_status_e app_dev_init(void)
         return COM_FAIL;
     }
 
+    /* 初始化modbus */
+    ret = app_modbus_init();
+    if (ret == COM_FAIL)
+    {
+        log_error("modbus初始化失败");
+        app_mqtt_deinit();
+        app_pool_deinit();
+        app_buf_deinit(device.download_handle);
+        app_buf_deinit(device.upload_handle);
+        return ret;
+    }
+
+
     return COM_OK;
 }
 
@@ -82,7 +95,6 @@ com_status_e app_dev_start(void)
 
 void app_dev_stop(void)
 {
-    device.is_running = false;
     app_mqtt_deinit();
     app_pool_deinit();
     app_buf_deinit(device.download_handle);
@@ -100,8 +112,8 @@ static void mqtt_recv_cb_func(char *msg, int msg_len)
 
 static void download_task(void *args)
 {
-    char data[1024] = {0};
-    int real_len    = 0;
+    char data[1024]  = {0};
+    uint8_t real_len = 0;
     while (1)
     {
         if (COM_FAIL == app_buf_read(device.download_handle, data, sizeof(data), &real_len))

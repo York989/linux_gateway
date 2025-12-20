@@ -6,7 +6,7 @@ modbus_t *ctx;
 
 com_status_e app_modbus_init(void)
 {
-    ctx = modbus_new_rtu("/dev/ttyS1", 115200, "N", 8, 1);
+    ctx = modbus_new_rtu("/dev/ttyS1", 115200, 'N', 8, 1);
     if (ctx == NULL)
     {
         log_error("modbus_new_rtu failed");
