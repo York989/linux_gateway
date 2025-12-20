@@ -10,6 +10,12 @@
 #include "string.h"
 #include "unistd.h"
 
+#define ADDRESS    "tcp://192.168.59.28:1883" // 函数内MQTTClient_create不允许使用mqtt[详见注释]
+#define CLIENTID   "GGYY_mqtt_client"
+#define PULL_TOPIC "gateway_re"
+#define PUSH_TOPIC "gateway_se"
+#define _GNU_SOURCE
+
 typedef enum {
     COM_OK = 0,
     COM_FAIL,

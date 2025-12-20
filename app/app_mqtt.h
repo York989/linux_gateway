@@ -11,5 +11,7 @@ com_status_e app_mqtt_send_msg(char *msg, int msg_len);
 
 void app_mqtt_register_recv_cb(void (*cb)(char *msg, int msg_len));
 
+void app_mqtt_deinit(void);
+
 
 #endif // _APP_MQTT_H_

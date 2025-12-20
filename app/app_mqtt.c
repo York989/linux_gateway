@@ -7,10 +7,7 @@ typedef struct {
 
 static app_mqtt_t mqtt;
 
-#define ADDRESS    "tcp://192.168.59.34:1883" // 函数内MQTTClient_create不允许使用mqtt[详见注释]
-#define CLIENTID   "GGYY_mqtt_client"
-#define PULL_TOPIC "gateway_re"
-#define PUSH_TOPIC "gateway_se"
+
 
 
 static void connlost(void *context, char *cause);

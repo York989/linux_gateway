@@ -1,9 +1,9 @@
 #include "app_buf.h"
 
 typedef struct {
-    char *buf_ptr;        // 子缓冲区地址
-    uint8_t buf_data_len; // 子缓冲内数据长度
-    uint8_t buf_capacity; // 子缓冲区可容纳大小
+    char *buf_ptr;    // 子缓冲区地址
+    int buf_data_len; // 子缓冲内数据长度
+    int buf_capacity; // 子缓冲区可容纳大小
 } sub_buf_t;
 
 
@@ -17,7 +17,7 @@ typedef struct {
 } app_buf_t;
 
 
-static sub_buf_t *sub_buf_init(uint8_t capacity)
+static sub_buf_t *sub_buf_init(int capacity)
 {
     sub_buf_t *sub_buf = (sub_buf_t *)malloc(sizeof(sub_buf_t));
     if (sub_buf == NULL)
@@ -35,7 +35,7 @@ static sub_buf_t *sub_buf_init(uint8_t capacity)
 }
 
 
-app_buf_handle app_buf_init(uint8_t capacity)
+app_buf_handle app_buf_init(int capacity)
 {
     app_buf_t *buf = (app_buf_t *)malloc(sizeof(app_buf_t)); // 初始化缓冲区
     if (buf == NULL)
@@ -114,7 +114,7 @@ com_status_e app_buf_write(app_buf_handle buf, char *data, uint8_t len)
 
 com_status_e app_buf_read(app_buf_handle buf,
                           char *pdata,
-                          uint8_t data_capacity,
+                          int data_capacity,
                           uint8_t *real_len)
 {
     app_buf_t *buffer = (app_buf_t *)buf;
@@ -133,7 +133,7 @@ com_status_e app_buf_read(app_buf_handle buf,
         sub_buf = buffer->sub_bufs[buffer->r_index]; // 重新定位缓存区
         if (sub_buf->buf_data_len == 0)
         {
-            log_error("缓存区没有数据");
+            // log_error("缓存区没有数据");
             pthread_mutex_unlock(&buffer->r_mutex);
             return COM_FAIL;
         }
