@@ -2,7 +2,7 @@ CC:=$(CROSS_COMPILE)gcc
 
 BOARD_DIR := $(shell pwd)/
 #改为自己开发板的ip地址
-PEER := root@192.168.59.104
+PEER := root@192.168.59.28
 
 # CFLAGS += -Wall -Wextra
 

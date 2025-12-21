@@ -26,32 +26,72 @@ com_status_e app_modbus_init(void)
     return COM_OK;
 }
 
-com_status_e app_modbus_read_single_inputREG(int slv_addr, uint16_t *value)
+com_status_e app_modbus_read_single_inputREG(int slv_addr, int reg_addr, uint16_t *value)
 {
     modbus_set_slave(ctx, slv_addr);
-    int ret = modbus_read_input_registers(ctx, 0, 1, value);
+    int ret = modbus_read_input_registers(ctx, reg_addr, 1, value);
     if (ret == -1)
     {
         log_error("modbus_read_input_registers failed");
         return COM_FAIL;
     }
-    log_info("modbus读取成功, value: %d", *value);
+    log_info("modbus读取inputREG成功, value: %d", *value);
     return COM_OK;
 }
 
-
-com_status_e app_modbus_write_single_holdREG(int slv_addr, uint16_t value)
+com_status_e app_modbus_readDiscReg(int slv_addr, int reg_addr, uint8_t *value)
 {
     modbus_set_slave(ctx, slv_addr);
-    int ret = modbus_write_register(ctx, 0, value);
+    int ret = modbus_read_input_bits(ctx, reg_addr, 1, value);
+    if (ret == -1)
+    {
+        log_error("modbus_read_disc failed");
+        return COM_FAIL;
+    }
+    log_info("modbus读取disc成功, value: %d", value);
+    return COM_OK;
+}
+
+com_status_e app_modbus_readCoilReg(int slv_addr, int reg_addr, uint8_t *value)
+{
+    modbus_set_slave(ctx, slv_addr);
+    int ret = modbus_read_bits(ctx, reg_addr, 1, value);
+    if (ret == -1)
+    {
+        log_error("modbus_read_coil failed");
+        return COM_FAIL;
+    }
+    log_info("modbus读取coil成功, value: %d", value);
+    return COM_OK;
+}
+
+com_status_e app_modbus_write_single_holdREG(int slv_addr, int reg_addr, uint16_t value)
+{
+    modbus_set_slave(ctx, slv_addr);
+    int ret = modbus_write_register(ctx, reg_addr, value);
     if (ret == -1)
     {
         log_error("modbus_write_register failed");
         return COM_FAIL;
     }
-    log_info("modbus写入成功, value: %d", value);
+    log_info("modbus写入holdREG成功, value: %d", value);
     return COM_OK;
 }
+
+com_status_e app_modbus_write_coil(int slv_addr, int reg_addr, uint16_t value)
+{
+    modbus_set_slave(ctx, slv_addr);
+    int ret = modbus_write_bit(ctx, reg_addr, value);
+    if (ret == -1)
+    {
+        log_error("modbus_write_coil failed");
+        return COM_FAIL;
+    }
+    log_info("modbus写入coil成功, value: %d", value);
+    return COM_OK;
+}
+
+
 
 
 /*

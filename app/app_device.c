@@ -123,28 +123,47 @@ static void download_task(void *args)
 
         log_info("收到数据：%.*s", real_len, data);
         com_msg_t msg;
+        u16_float_u float2u16, u162float;
         com_msg_js2ms(&msg, data);
         // 分别打印解析后的数据,内的所有成员
-        if (strcmp(msg.connType, "RS485") == 0)
+        if (strcmp(msg.connType, "rs485") == 0)
         {
             if (strcmp(msg.action, "set") == 0)
             {
                 log_info("收到设置指令");
-                log_info("%s, %d, %s, %d", msg.connType, msg.motorID, msg.action, msg.motospeed);
-                app_modbus_write_single_holdREG(msg.motorID, msg.motospeed);
+                log_info("%s, %d, %s, %.2f, %.2f", msg.connType, msg.motorID, msg.action, msg.targetAngle, msg.targetSpeed);
+
+                float2u16.FLOAT = msg.targetAngle;
+                app_modbus_write_single_holdREG(msg.motorID, 0, float2u16.U16_ARR[0]);
+                app_modbus_write_single_holdREG(msg.motorID, 1, float2u16.U16_ARR[1]);
+
+                float2u16.FLOAT = msg.targetSpeed;
+                app_modbus_write_single_holdREG(msg.motorID, 2, float2u16.U16_ARR[0]);
+                app_modbus_write_single_holdREG(msg.motorID, 3, float2u16.U16_ARR[1]);
+
+                app_modbus_write_coil(msg.motorID, 0, (uint16_t)msg.is_start);
             }
             else if (strcmp(msg.action, "get") == 0)
             {
                 log_info("收到获取指令");
-                com_status_e err = app_modbus_read_single_inputREG(msg.motorID, (uint16_t *)&msg.motospeed);
-                if (err == COM_OK)
-                {
-                    msg.status = "ok";
-                }
-                else
-                {
-                    msg.status = "fail";
-                }
+                // com_status_e err = app_modbus_read_single_inputREG(msg.motorID, (uint16_t *)&msg.motospeed);
+                app_modbus_read_single_inputREG(msg.motorID, 0, &u162float.U16_ARR[0]);
+                app_modbus_read_single_inputREG(msg.motorID, 1, &u162float.U16_ARR[1]);
+                msg.targetAngle = u162float.FLOAT;
+                app_modbus_read_single_inputREG(msg.motorID, 2, &u162float.U16_ARR[0]);
+                app_modbus_read_single_inputREG(msg.motorID, 3, &u162float.U16_ARR[1]);
+                msg.targetSpeed = u162float.FLOAT;
+
+                app_modbus_readCoilReg(msg.motorID, 0, &msg.is_start);
+
+                // if (err == COM_OK)
+                // {
+                //     msg.status = "ok";
+                // }
+                // else
+                // {
+                //     msg.status = "fail";
+                // }
                 // 假设读到数据：
                 com_msg_ms2js(&msg, data);
                 app_buf_write(device.upload_handle, data, strlen(data));

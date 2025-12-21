@@ -4,13 +4,21 @@
 
 #include "commo_config.h"
 
+typedef union {
+    uint16_t U16_ARR[2];
+    float FLOAT;
+} u16_float_u;
+
+
+
 
 typedef struct {
     char *connType;
-    int motorID;
+    float targetSpeed;
+    float targetAngle;
     char *action;
-    int motospeed;
-    char *status;
+    uint8_t motorID;
+    uint8_t is_start;
 } com_msg_t;
 
 void com_msg_ms2js(com_msg_t *msg, char *json);
