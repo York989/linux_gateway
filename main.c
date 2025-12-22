@@ -1,4 +1,5 @@
 #include "app_device.h"
+#include "ota_version_check.h"
 #include "signal.h"
 
 void signal_handler(int signum)
@@ -39,6 +40,7 @@ int main(int argc, char const *argv[])
     else if (strcmp(argv[1], "ota") == 0)
     {
         log_info("ota 功能正在开发中");
+        ota_version_auto_check();
     }
     else if (strcmp(argv[1], "deamon") == 0)
     {
