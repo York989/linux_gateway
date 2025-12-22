@@ -153,7 +153,7 @@ void ota_version_auto_check(void)
     {
         time_t now   = time(NULL);
         struct tm *t = localtime(&now);
-        if (t->tm_hour == 14 && t->tm_min == 47)
+        if (t->tm_hour == 19 && t->tm_min == 56)
         {
             ota_version_check();
         }
